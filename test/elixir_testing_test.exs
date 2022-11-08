@@ -24,8 +24,6 @@ defmodule ElixirTestingTest do
     assert option1Selected == "true"
     assert option2Selected == nil
 
-
-
   end
 
 hound_session()
@@ -53,7 +51,6 @@ hound_session()
 
   end
 
-
 hound_session()
 
   test "Login page test - successful logout" do
@@ -80,6 +77,45 @@ hound_session()
 
     assert logoutSuccess == true
 
+  end
+
+  hound_session()
+
+  test "Checkbox test" do
+    navigate_to("https://the-internet.herokuapp.com/")
+
+    checkboxes_link = find_element(:xpath, "/html/body/div[2]/div/ul/li[6]/a")
+    click(checkboxes_link)
+
+    checkbox_1_radio = find_element(:xpath, "/html/body/div[2]/div/div/form/input[1]")
+    click(checkbox_1_radio)
+
+    checkbox_2_radio = find_element(:xpath, "/html/body/div[2]/div/div/form/input[2]")
+    click(checkbox_2_radio)
+
+    assert selected?(checkbox_1_radio) == true
+    assert selected?(checkbox_2_radio) == false
+
+  end
+
+  hound_session()
+
+  test "Key presses test" do
+    navigate_to("https://the-internet.herokuapp.com/")
+
+    key_press_link = find_element(:xpath, "/html/body/div[2]/div/ul/li[31]/a")
+    click(key_press_link)
+
+    input_field = find_element(:id, "target")
+    click(input_field)
+
+    send_keys :control
+
+    control_sent = find_element(:xpath, "/html/body/div[2]/div/div/p[2]")
+
+    assert inner_text(control_sent) == "You entered: CONTROL"
+    assert visible_text(control_sent) == "You entered: CONTROL"
+    assert inner_text(control_sent) != "You entered: ENTER"
 
   end
 
