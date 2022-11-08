@@ -16,8 +16,71 @@ defmodule ElixirTestingTest do
     option1 = find_element(:xpath, "/html/body/div[2]/div/div/select/option[2]")
     click(option1)
 
-    dropdownValue = visible_text(dropdownBox)
-    assert dropdownValue == "Option 1"
+    option2 = find_element(:xpath, "/html/body/div[2]/div/div/select/option[3]")
+
+    option1Selected = attribute_value(option1, "selected")
+    option2Selected = attribute_value(option2, "selected")
+
+    assert option1Selected == "true"
+    assert option2Selected == nil
+
+
 
   end
+
+hound_session()
+
+  test "Login page test - successful login" do
+    navigate_to("https://the-internet.herokuapp.com/")
+
+    formAuthLink1 = find_element(:xpath, "/html/body/div[2]/div/ul/li[21]/a")
+    click(formAuthLink1)
+
+    usernameField1 = find_element(:xpath, "/html/body/div[2]/div/div/form/div[1]/div/input")
+    fill_field(usernameField1, "tomsmith")
+
+    passwordField1 = find_element(:xpath, "/html/body/div[2]/div/div/form/div[2]/div/input")
+    fill_field(passwordField1, "SuperSecretPassword!")
+
+    loginBtn1 = find_element(:xpath, "/html/body/div[2]/div/div/form/button/i")
+    click(loginBtn1)
+
+    secureArea = find_element(:xpath, "/html/body/div[1]/div/div")
+
+    loginSuccess = element_displayed?(secureArea)
+
+    assert loginSuccess == true
+
+  end
+
+
+hound_session()
+
+  test "Login page test - successful logout" do
+    navigate_to("https://the-internet.herokuapp.com/")
+
+    formAuthLink2 = find_element(:xpath, "/html/body/div[2]/div/ul/li[21]/a")
+    click(formAuthLink2)
+
+    usernameField2 = find_element(:xpath, "/html/body/div[2]/div/div/form/div[1]/div/input")
+    fill_field(usernameField2, "tomsmith")
+
+    passwordField2 = find_element(:xpath, "/html/body/div[2]/div/div/form/div[2]/div/input")
+    fill_field(passwordField2, "SuperSecretPassword!")
+
+    loginBtn2 = find_element(:xpath, "/html/body/div[2]/div/div/form/button/i")
+    click(loginBtn2)
+
+    logoutbtn = find_element(:xpath, "/html/body/div[2]/div/div/a")
+    click(logoutbtn)
+
+    logoutArea = find_element(:xpath, "/html/body/div[1]/div/div")
+
+    logoutSuccess = element_displayed?(logoutArea)
+
+    assert logoutSuccess == true
+
+
+  end
+
 end

@@ -1,3 +1,3 @@
 import Config
 
-config :hound, port: 4444
+config :hound, driver: "chrome_driver"
